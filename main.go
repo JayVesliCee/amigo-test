@@ -27,6 +27,8 @@ func main() {
 
 	r := chi.NewRouter()
 
+	routes(r)
+
 	fmt.Println("Running on port:", service.Config.Port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", service.Config.Port), r))
 }
