@@ -8,7 +8,7 @@ import (
 // Config structure representing the conf used by the application
 type Config struct {
 	DBName     string
-	DBUrl      string
+	DBURL      string
 	DBUser     string
 	DBPassword string
 	Port       int
