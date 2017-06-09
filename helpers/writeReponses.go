@@ -5,12 +5,14 @@ import (
 	"net/http"
 )
 
+// WriteReponse as bytes for standard output responses
 func WriteReponse(content string, headerStatus int, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/octet-stream")
 	w.WriteHeader(headerStatus)
 	w.Write([]byte(content))
 }
 
+// WriteJSONResponse as Json when requiering to deal with specific clients
 func WriteJSONResponse(v interface{}, headerStatus int, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(headerStatus)
