@@ -1,11 +1,11 @@
 package main
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"strings"
 
+	"github.com/amigo-test/helpers"
 	"github.com/jinzhu/gorm"
 	"github.com/pressly/chi"
 )
@@ -28,30 +28,25 @@ func retrieveMessageHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := db.First(&m, messageID).Error
 	if err != nil {
-		w.Header().Set("Content-Type", "application/octet-stream")
-		w.Write([]byte("error on retrieving message from ID"))
+		helpers.WriteReponse(err.Error()+" On retrieving message from ID\n", http.StatusBadRequest, w)
 	}
 
-	w.Header().Set("Content-Type", "application/octet-stream")
-	w.WriteHeader(200)
-	w.Write([]byte(m.Content + "\n"))
+	helpers.WriteReponse(m.Content+"\n", http.StatusOK, w)
 }
 
 func receiveMessageHandler(w http.ResponseWriter, r *http.Request) {
 	bodyBytes, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		w.Header().Set("Content-Type", "application/octet-stream")
-		w.Write([]byte("error on encoding data"))
+		helpers.WriteReponse(err.Error()+" On reading body\n", http.StatusBadRequest, w)
 	}
+
 	m := &message{
 		Content: string(bodyBytes),
 	}
-
 	db := extractContext(r)
 	err = db.Create(&m).Error
 	if err != nil {
-		w.Header().Set("Content-Type", "application/octet-stream")
-		w.Write([]byte("error on creating message in DB"))
+		helpers.WriteReponse(err.Error()+" On creating message in DB\n", http.StatusInternalServerError, w)
 	}
 
 	idToReturn := struct {
@@ -59,10 +54,5 @@ func receiveMessageHandler(w http.ResponseWriter, r *http.Request) {
 	}{
 		m.ID,
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
-	if err = json.NewEncoder(w).Encode(idToReturn); err != nil {
-		w.Header().Set("Content-Type", "application/octet-stream")
-		w.Write([]byte("error on encoding data"))
-	}
+	helpers.WriteJSONResponse(idToReturn, http.StatusOK, w)
 }
