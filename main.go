@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/pressly/chi"
+	"github.com/pressly/chi/middleware"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -26,6 +27,9 @@ func main() {
 	}
 
 	r := chi.NewRouter()
+
+	r.Use(middleware.StripSlashes)
+	r.Use(contextMiddleware(service))
 
 	routes(r)
 

@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/amigo-test/config"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type service struct {
@@ -22,6 +23,8 @@ func newService(configFile string) (*service, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	db.AutoMigrate(&message{})
 
 	s := &service{
 		Config: c,
