@@ -1,0 +1,7 @@
+{
+    "dbname": "amigodbtest",
+    "dbuser": "amigo",
+    "dbpassword": "amigotmppwd",
+    "dburl": "localhost",
+    "port": 8080
+}

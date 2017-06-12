@@ -16,6 +16,7 @@ func WriteReponse(content string, headerStatus int, w http.ResponseWriter) {
 func WriteJSONResponse(v interface{}, headerStatus int, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(headerStatus)
+
 	if err := json.NewEncoder(w).Encode(v); err != nil {
 		w.Header().Set("Content-Type", "application/octet-stream")
 		w.WriteHeader(http.StatusInternalServerError)

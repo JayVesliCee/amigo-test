@@ -1,3 +1,7 @@
+/*
+	The main application is using a lightway framework (chi) in order to use a optimised and stable router.
+*/
+
 package main
 
 import (
@@ -10,13 +14,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-/*
-	TODO
-	2 endpoints: post message + find message by id
-	Postgresql in back
-	Use external libs as less as possible
-*/
-
 func main() {
 	pathToConfig := flag.String("config", "config.json", "Path to config file")
 	flag.Parse()
@@ -25,14 +22,14 @@ func main() {
 	if err != nil {
 		log.WithError(err).Error("Error on initialising services")
 	}
+	defer service.Close()
 
 	r := chi.NewRouter()
 
 	r.Use(middleware.StripSlashes)
-	r.Use(contextMiddleware(service))
 
-	routes(r)
+	routes(r, service)
 
-	fmt.Println("Running on port:", service.Config.Port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", service.Config.Port), r))
+	log.Info("Running on port:", service.Config.Port)
+	log.WithError(http.ListenAndServe(fmt.Sprintf(":%d", service.Config.Port), r))
 }

@@ -1,0 +1,7 @@
+{
+    "dbname": "zog",
+    "dbuser": "zag",
+    "dbpassword": "tried",
+    "dburl": "localhost",
+    "port": 8080
+}

@@ -33,3 +33,7 @@ func newService(configFile string) (*service, error) {
 
 	return s, nil
 }
+
+func (s *service) Close() {
+	s.DB.Close()
+}
