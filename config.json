@@ -1,0 +1,7 @@
+{
+    "dbname": "amigodb",
+    "dbuser": "amigo",
+    "dbpassword": "amigotmppwd",
+    "dburl": "db",
+    "port": 8080
+}
