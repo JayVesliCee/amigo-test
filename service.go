@@ -1,18 +1,22 @@
+/*
+	Service structure is the main manager for our configuration flow.
+	We manage the main conf (url, keys, pwd) and the DB session
+*/
+
 package main
 
 import (
-	"github.com/amigo-test/config"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type service struct {
-	Config *config.Config
+	Config *Config
 	DB     *gorm.DB
 }
 
 func newService(configFile string) (*service, error) {
-	c, err := config.LoadConfig(configFile)
+	c, err := loadConfig(configFile)
 	if err != nil {
 		return nil, err
 	}

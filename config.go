@@ -1,4 +1,9 @@
-package config
+/*
+	A config file is often use through a whole architecture.
+	Thus it could be exported as an other package.
+*/
+
+package main
 
 import (
 	"encoding/json"
@@ -15,7 +20,7 @@ type Config struct {
 }
 
 // LoadConfig read from file and unmarshall to Config structure.
-func LoadConfig(configFile string) (*Config, error) {
+func loadConfig(configFile string) (*Config, error) {
 	conf, err := ioutil.ReadFile(configFile)
 	if err != nil {
 		return nil, err

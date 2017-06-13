@@ -1,19 +1,22 @@
-package helpers
+/*
+	Those functions could be extracted in an other package in case of reusability.
+	It's a helper in order to send response through bytes or JSON
+*/
+
+package main
 
 import (
 	"encoding/json"
 	"net/http"
 )
 
-// WriteReponse as bytes for standard output responses
-func WriteReponse(content string, headerStatus int, w http.ResponseWriter) {
+func writeReponse(content string, headerStatus int, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/octet-stream")
 	w.WriteHeader(headerStatus)
 	w.Write([]byte(content))
 }
 
-// WriteJSONResponse as Json when requiering to deal with specific clients
-func WriteJSONResponse(v interface{}, headerStatus int, w http.ResponseWriter) {
+func writeJSONResponse(v interface{}, headerStatus int, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(headerStatus)
 
