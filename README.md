@@ -43,7 +43,7 @@ The steps are then simple:
     - Once the build is finished `docker-compose up`
 
 And you've the project running.
-In order to use the project as shown in the subject, you simply have to use http://localhost:8080 + routing
+In order to use the project as shown in the subject, just keep in mind that the configured port is `:8080` for the project.
 
 # Installing without docker
 ` Requierements :`
