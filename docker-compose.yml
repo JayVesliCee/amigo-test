@@ -1,0 +1,14 @@
+version: '2'
+services:
+  db:
+    restart: always
+    build: database/
+    ports:
+      - "5432:5432"
+  web:
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
